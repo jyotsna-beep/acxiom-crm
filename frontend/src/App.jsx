@@ -5,6 +5,9 @@ import ForbiddenPage from "./pages/ForbiddenPage";
 import LoginPage from "./pages/LoginPage";
 import AppLayout from "./layouts/AppLayout";
 import DashboardPlaceholderPage from "./pages/DashboardPlaceholderPage";
+import DashboardPage from "./pages/DashboardPage";
+import AuditLogPage from "./pages/AuditLogPage";
+import ReportsPage from "./pages/ReportsPage";
 import ModulePlaceholderPage from "./pages/ModulePlaceholderPage";
 import CustomerCreatePage from "./pages/customers/CustomerCreatePage";
 import CustomerDetailPage from "./pages/customers/CustomerDetailPage";
@@ -32,7 +35,7 @@ export default function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
-          <Route path="/dashboard" element={<DashboardPlaceholderPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/customers" element={<CustomerListPage />} />
           <Route path="/customers/new" element={<CustomerCreatePage />} />
           <Route path="/customers/:customerId" element={<CustomerDetailPage />} />
@@ -53,13 +56,13 @@ export default function App() {
           <Route path="/activities/new" element={<ActivityCreatePage />} />
           <Route path="/activities/:id" element={<EngagementDetailPage kind="activity" />} />
           <Route path="/activities/:id/edit" element={<ActivityEditPage />} />
-          <Route path="/reports" element={<ModulePlaceholderPage title="Reports" />} />
+          <Route path="/reports" element={<ReportsPage />} />
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
             <Route path="/users" element={<UserListPage />} />
             <Route path="/users/new" element={<UserCreatePage />} />
             <Route path="/users/:id" element={<UserDetailPage />} />
             <Route path="/users/:id/edit" element={<UserEditPage />} />
-            <Route path="/audit-logs" element={<ModulePlaceholderPage title="Audit Logs" />} />
+            <Route path="/audit-logs" element={<AuditLogPage />} />
           </Route>
           <Route path="/forbidden" element={<ForbiddenPage />} />
         </Route>
