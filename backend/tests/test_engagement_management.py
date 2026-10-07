@@ -1,4 +1,4 @@
-import os,tempfile,unittest
+import os,unittest
 from datetime import date,timedelta,datetime,timezone
 from pathlib import Path
 from uuid import UUID,uuid4
@@ -7,7 +7,7 @@ from alembic.config import Config
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine,delete,event,select
 from sqlalchemy.orm import sessionmaker
-DB=Path(tempfile.gettempdir())/"acxiomcrm-engagement-tests.db";os.environ["DATABASE_URL"]=f"sqlite+pysqlite:///{DB.as_posix()}";os.environ["AUTH_SECRET_KEY"]="unit-test-secret-not-for-production-123456";os.environ["COOKIE_SECURE"]="false"
+from test_support import TEST_DATABASE as DB
 from app.api.deps import get_db
 from app.core.config import get_settings
 from app.core.security import hash_password

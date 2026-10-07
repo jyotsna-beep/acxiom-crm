@@ -1,13 +1,9 @@
-import os
 import unittest
 from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 from uuid import uuid4
 
-os.environ.setdefault("DATABASE_URL", "sqlite+pysqlite:///:memory:")
-os.environ.setdefault("AUTH_SECRET_KEY", "unit-test-secret-not-for-production-123456")
-os.environ.setdefault("LOCKOUT_MAX_ATTEMPTS", "2")
-os.environ.setdefault("LOCKOUT_DURATION_MINUTES", "15")
+import test_support  # noqa: F401  Central test environment before application imports.
 
 from fastapi import HTTPException
 

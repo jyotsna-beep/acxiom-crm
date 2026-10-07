@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-import tempfile
 import unittest
 from uuid import uuid4
 
@@ -11,10 +10,7 @@ from sqlalchemy import create_engine, delete, event, select
 from sqlalchemy import func
 from sqlalchemy.orm import sessionmaker
 
-TEST_DATABASE = Path(tempfile.gettempdir()) / "acxiomcrm-lead-tests.db"
-os.environ["DATABASE_URL"] = f"sqlite+pysqlite:///{TEST_DATABASE.as_posix()}"
-os.environ["AUTH_SECRET_KEY"] = "unit-test-secret-not-for-production-123456"
-os.environ["COOKIE_SECURE"] = "false"
+from test_support import TEST_DATABASE
 from app.api.deps import get_db
 from app.core.config import get_settings
 from app.core.security import hash_password

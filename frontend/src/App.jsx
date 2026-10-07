@@ -20,6 +20,7 @@ import { OpportunityCreatePage, OpportunityEditPage } from "./pages/opportunitie
 import EngagementListPage from "./pages/engagements/EngagementListPage";
 import EngagementDetailPage from "./pages/engagements/EngagementDetailPage";
 import { FollowUpCreatePage, FollowUpEditPage, ActivityCreatePage, ActivityEditPage } from "./pages/engagements/EngagementFormPages";
+import { UserListPage, UserCreatePage, UserDetailPage, UserEditPage } from "./pages/users/UserPages";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -54,7 +55,10 @@ export default function App() {
           <Route path="/activities/:id/edit" element={<ActivityEditPage />} />
           <Route path="/reports" element={<ModulePlaceholderPage title="Reports" />} />
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
-            <Route path="/users" element={<ModulePlaceholderPage title="Users" />} />
+            <Route path="/users" element={<UserListPage />} />
+            <Route path="/users/new" element={<UserCreatePage />} />
+            <Route path="/users/:id" element={<UserDetailPage />} />
+            <Route path="/users/:id/edit" element={<UserEditPage />} />
             <Route path="/audit-logs" element={<ModulePlaceholderPage title="Audit Logs" />} />
           </Route>
           <Route path="/forbidden" element={<ForbiddenPage />} />
