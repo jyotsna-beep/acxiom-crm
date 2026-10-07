@@ -1,21 +1,35 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
-import AuthFoundationPage from "./pages/AuthFoundationPage";
 import ForbiddenPage from "./pages/ForbiddenPage";
 import LoginPage from "./pages/LoginPage";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPlaceholderPage from "./pages/DashboardPlaceholderPage";
+import ModulePlaceholderPage from "./pages/ModulePlaceholderPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/app" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/forbidden" element={<ForbiddenPage />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="/app" element={<AuthFoundationPage />} />
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<DashboardPlaceholderPage />} />
+          <Route path="/customers" element={<ModulePlaceholderPage title="Customers" />} />
+          <Route path="/leads" element={<ModulePlaceholderPage title="Leads" />} />
+          <Route path="/follow-ups" element={<ModulePlaceholderPage title="Follow-Ups" />} />
+          <Route path="/opportunities" element={<ModulePlaceholderPage title="Opportunities" />} />
+          <Route path="/activities" element={<ModulePlaceholderPage title="Activities" />} />
+          <Route path="/reports" element={<ModulePlaceholderPage title="Reports" />} />
+          <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>
+            <Route path="/users" element={<ModulePlaceholderPage title="Users" />} />
+            <Route path="/audit-logs" element={<ModulePlaceholderPage title="Audit Logs" />} />
+          </Route>
+          <Route path="/forbidden" element={<ForbiddenPage />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

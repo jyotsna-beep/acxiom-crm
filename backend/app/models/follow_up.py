@@ -11,7 +11,12 @@ from app.models.mixins import TimestampMixin, UUIDPrimaryKeyMixin
 class FollowUp(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "follow_ups"
     __table_args__ = (
-        CheckConstraint("((customer_id IS NOT NULL)::integer + (lead_id IS NOT NULL)::integer + (opportunity_id IS NOT NULL)::integer) = 1", name="ck_follow_ups_one_related_record"),
+        CheckConstraint(
+            "(CASE WHEN customer_id IS NOT NULL THEN 1 ELSE 0 END + "
+            "CASE WHEN lead_id IS NOT NULL THEN 1 ELSE 0 END + "
+            "CASE WHEN opportunity_id IS NOT NULL THEN 1 ELSE 0 END) = 1",
+            name="ck_follow_ups_one_related_record",
+        ),
         CheckConstraint("status IN ('planned', 'completed', 'missed', 'cancelled')", name="ck_follow_ups_status"),
         Index("ix_follow_ups_date_status_assignee", "follow_up_date", "status", "assigned_user_id"),
     )

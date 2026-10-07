@@ -1,0 +1,12 @@
+.shell-sidebar {
+  min-height: calc(100vh - 56px);
+}
+
+@media (max-width: 991.98px) {
+  .shell-sidebar {
+    position: absolute;
+    z-index: 1020;
+    width: min(18rem, 85vw);
+    min-height: calc(100vh - 56px);
+  }
+}

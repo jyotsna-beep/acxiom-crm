@@ -53,13 +53,12 @@ def _clear_auth_cookies(response: Response) -> None:
 
 
 def _user_response(user: User) -> CurrentUserResponse:
-    return CurrentUserResponse(id=user.id, name=user.name, email=user.email, username=user.username, role=user.role.name, is_active=user.is_active)
+    return CurrentUserResponse(id=user.id, email=user.email, username=user.username, role=user.role.name, is_active=user.is_active)
 
 
 @router.get("/csrf", status_code=status.HTTP_204_NO_CONTENT)
-def issue_public_csrf_token(response: Response) -> Response:
+def issue_public_csrf_token(response: Response) -> None:
     _set_csrf_cookie(response, generate_csrf_token())
-    return response
 
 
 @router.post("/register", status_code=status.HTTP_202_ACCEPTED, response_model=RegistrationResponse)
@@ -81,10 +80,9 @@ def login(payload: LoginRequest, response: Response, request: Request, db: Sessi
 
 
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
-def logout(response: Response, request: Request, db: Session = Depends(get_db), current_user: User = Depends(require_csrf)) -> Response:
+def logout(response: Response, request: Request, db: Session = Depends(get_db), current_user: User = Depends(require_csrf)) -> None:
     logout_user(db, user=current_user, ip_address=_client_ip(request))
     _clear_auth_cookies(response)
-    return response
 
 
 @router.get("/me", response_model=CurrentUserResponse)

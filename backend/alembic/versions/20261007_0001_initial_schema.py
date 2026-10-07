@@ -17,14 +17,20 @@ depends_on = None
 
 def _timestamps() -> list[sa.Column]:
     return [
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
+        sa.Column("updated_at", sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
     ]
 
 
 def upgrade() -> None:
     uuid = sa.Uuid()
-    op.create_table("roles", sa.Column("id", uuid, primary_key=True), sa.Column("name", sa.String(32), nullable=False, unique=True), *_timestamps())
+    op.create_table(
+        "roles",
+        sa.Column("id", uuid, primary_key=True),
+        sa.Column("name", sa.String(32), nullable=False, unique=True),
+        *_timestamps(),
+        sa.CheckConstraint("name IN ('Admin', 'Manager', 'Sales Executive')", name="ck_roles_allowed_names"),
+    )
     op.create_table(
         "users",
         sa.Column("id", uuid, primary_key=True), sa.Column("name", sa.String(150), nullable=False),
@@ -78,7 +84,7 @@ def upgrade() -> None:
         sa.Column("opportunity_id", uuid, sa.ForeignKey("opportunities.id")), sa.Column("follow_up_date", sa.Date(), nullable=False), sa.Column("follow_up_type", sa.String(30), nullable=False),
         sa.Column("subject", sa.String(200), nullable=False), sa.Column("status", sa.String(20), nullable=False), sa.Column("notes", sa.Text()),
         sa.Column("assigned_user_id", uuid, sa.ForeignKey("users.id"), nullable=False), sa.Column("completed_at", sa.DateTime(timezone=True)), *_timestamps(),
-        sa.CheckConstraint("((customer_id IS NOT NULL)::integer + (lead_id IS NOT NULL)::integer + (opportunity_id IS NOT NULL)::integer) = 1", name="ck_follow_ups_one_related_record"),
+        sa.CheckConstraint("(CASE WHEN customer_id IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN lead_id IS NOT NULL THEN 1 ELSE 0 END + CASE WHEN opportunity_id IS NOT NULL THEN 1 ELSE 0 END) = 1", name="ck_follow_ups_one_related_record"),
         sa.CheckConstraint("status IN ('planned', 'completed', 'missed', 'cancelled')", name="ck_follow_ups_status"),
     )
     for name, columns in (("ix_follow_ups_customer_id", ["customer_id"]), ("ix_follow_ups_lead_id", ["lead_id"]), ("ix_follow_ups_opportunity_id", ["opportunity_id"]), ("ix_follow_ups_assigned_user_id", ["assigned_user_id"]), ("ix_follow_ups_status", ["status"]), ("ix_follow_ups_date_status_assignee", ["follow_up_date", "status", "assigned_user_id"])):
@@ -100,7 +106,7 @@ def upgrade() -> None:
         sa.Column("id", uuid, primary_key=True), sa.Column("user_id", uuid, sa.ForeignKey("users.id")), sa.Column("action", sa.String(100), nullable=False),
         sa.Column("entity_name", sa.String(100), nullable=False), sa.Column("record_id", sa.String(36)), sa.Column("result", sa.String(30), nullable=False),
         sa.Column("old_value", sa.JSON()), sa.Column("new_value", sa.JSON()), sa.Column("details", sa.Text()), sa.Column("ip_address", sa.String(45)),
-        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
+        sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
     )
     for name, columns in (("ix_audit_logs_user_id", ["user_id"]), ("ix_audit_logs_action", ["action"]), ("ix_audit_logs_entity_name", ["entity_name"]), ("ix_audit_logs_record_id", ["record_id"]), ("ix_audit_logs_created_at", ["created_at"]), ("ix_audit_logs_entity_record", ["entity_name", "record_id"]), ("ix_audit_logs_user_created", ["user_id", "created_at"])):
         op.create_index(name, "audit_logs", columns)

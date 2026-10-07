@@ -4,8 +4,8 @@ from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 from uuid import uuid4
 
-os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://placeholder:placeholder@localhost:5432/placeholder")
-os.environ.setdefault("AUTH_SECRET_KEY", "unit-test-secret-not-for-production")
+os.environ.setdefault("DATABASE_URL", "sqlite+pysqlite:///:memory:")
+os.environ.setdefault("AUTH_SECRET_KEY", "unit-test-secret-not-for-production-123456")
 os.environ.setdefault("LOCKOUT_MAX_ATTEMPTS", "2")
 os.environ.setdefault("LOCKOUT_DURATION_MINUTES", "15")
 
@@ -147,7 +147,7 @@ class AuthorizationPolicyTests(unittest.TestCase):
 class ResponseSafetyTests(unittest.TestCase):
     def test_password_hash_is_not_in_current_user_response(self):
         user = make_user()
-        response = CurrentUserResponse(id=user.id, name=user.name, email=user.email, username=user.username, role=user.role.name, is_active=user.is_active)
+        response = CurrentUserResponse(id=user.id, email=user.email, username=user.username, role=user.role.name, is_active=user.is_active)
         self.assertNotIn("password_hash", response.model_dump())
 
 

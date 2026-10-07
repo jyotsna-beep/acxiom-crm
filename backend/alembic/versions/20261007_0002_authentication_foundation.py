@@ -24,15 +24,9 @@ def upgrade() -> None:
         "users",
         sa.Column("token_version", sa.Integer(), nullable=False, server_default=sa.text("0")),
     )
-    op.create_check_constraint(
-        "ck_roles_allowed_names",
-        "roles",
-        "name IN ('Admin', 'Manager', 'Sales Executive')",
-    )
     roles = sa.table("roles", sa.column("id", sa.Uuid()), sa.column("name", sa.String()))
     op.bulk_insert(roles, [{"id": uuid4(), "name": role_name} for role_name in ROLE_NAMES])
 
 
 def downgrade() -> None:
-    op.drop_constraint("ck_roles_allowed_names", "roles", type_="check")
     op.drop_column("users", "token_version")

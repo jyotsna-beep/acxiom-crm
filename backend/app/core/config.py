@@ -37,6 +37,8 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def require_secure_production_cookies(self) -> "Settings":
+        if len(self.auth_secret_key) < 32:
+            raise ValueError("AUTH_SECRET_KEY must be at least 32 characters long.")
         if self.app_environment == "production" and not self.cookie_secure:
             raise ValueError("COOKIE_SECURE must be true in production.")
         return self
