@@ -14,6 +14,9 @@ import LeadListPage from "./pages/leads/LeadListPage";
 import LeadCreatePage from "./pages/leads/LeadCreatePage";
 import LeadDetailPage from "./pages/leads/LeadDetailPage";
 import LeadEditPage from "./pages/leads/LeadEditPage";
+import OpportunityListPage from "./pages/opportunities/OpportunityListPage";
+import OpportunityDetailPage from "./pages/opportunities/OpportunityDetailPage";
+import { OpportunityCreatePage, OpportunityEditPage } from "./pages/opportunities/OpportunityFormPages";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -35,7 +38,10 @@ export default function App() {
           <Route path="/leads/:leadId" element={<LeadDetailPage />} />
           <Route path="/leads/:leadId/edit" element={<LeadEditPage />} />
           <Route path="/follow-ups" element={<ModulePlaceholderPage title="Follow-Ups" />} />
-          <Route path="/opportunities" element={<ModulePlaceholderPage title="Opportunities" />} />
+          <Route path="/opportunities" element={<OpportunityListPage />} />
+          <Route path="/opportunities/new" element={<OpportunityCreatePage />} />
+          <Route path="/opportunities/:opportunityId" element={<OpportunityDetailPage />} />
+          <Route path="/opportunities/:opportunityId/edit" element={<OpportunityEditPage />} />
           <Route path="/activities" element={<ModulePlaceholderPage title="Activities" />} />
           <Route path="/reports" element={<ModulePlaceholderPage title="Reports" />} />
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>

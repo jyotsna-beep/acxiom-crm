@@ -19,6 +19,7 @@ class Opportunity(UUIDPrimaryKeyMixin, TimestampMixin, Base):
         Index("ix_opportunities_expected_close_date", "expected_close_date"),
     )
 
+    opportunity_code: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
     name: Mapped[str] = mapped_column(String(150), nullable=False)
     customer_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("customers.id"), nullable=False, index=True)
     lead_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("leads.id"), index=True)
