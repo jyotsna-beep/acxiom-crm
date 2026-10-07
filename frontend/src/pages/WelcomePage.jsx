@@ -1,3 +1,4 @@
+import React from "react";
 export default function WelcomePage() {
   return (
     <main className="container py-5">

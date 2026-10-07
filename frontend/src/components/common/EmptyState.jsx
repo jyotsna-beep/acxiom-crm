@@ -1,3 +1,4 @@
+import React from "react";
 export default function EmptyState({ title = "Nothing to show", message }) {
   return (
     <section className="border rounded-3 p-4 text-center bg-light" aria-live="polite">

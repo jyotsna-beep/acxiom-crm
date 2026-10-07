@@ -1,3 +1,4 @@
+import React from "react";
 export default function Pagination({ page = 1, pageCount = 1, onPageChange }) {
   if (pageCount <= 1) {
     return null;

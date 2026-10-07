@@ -1,3 +1,4 @@
+import React from "react";
 export default function ConfirmDialog({ isOpen, title = "Confirm action", message, confirmLabel = "Confirm", onCancel, onConfirm }) {
   if (!isOpen) {
     return null;

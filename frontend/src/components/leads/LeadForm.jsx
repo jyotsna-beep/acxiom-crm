@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AlertMessage from "../common/AlertMessage";
 
 const empty = { name: "", email: "", phone: "", company_name: "", source: "", priority: "medium", notes: "", owner_id: "" };

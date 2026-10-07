@@ -1,3 +1,4 @@
+import React from "react";
 export default function AlertMessage({ children, variant = "danger", onDismiss }) {
   if (!children) {
     return null;

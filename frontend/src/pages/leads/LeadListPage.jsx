@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getLeadOwners, getLeads } from "../../api/leads";
 import EmptyState from "../../components/common/EmptyState"; import LoadingState from "../../components/common/LoadingState"; import PageHeader from "../../components/common/PageHeader"; import Pagination from "../../components/common/Pagination"; import SearchFilterContainer from "../../components/common/SearchFilterContainer"; import StatusBadge from "../../components/common/StatusBadge";
