@@ -10,6 +10,10 @@ import CustomerCreatePage from "./pages/customers/CustomerCreatePage";
 import CustomerDetailPage from "./pages/customers/CustomerDetailPage";
 import CustomerEditPage from "./pages/customers/CustomerEditPage";
 import CustomerListPage from "./pages/customers/CustomerListPage";
+import LeadListPage from "./pages/leads/LeadListPage";
+import LeadCreatePage from "./pages/leads/LeadCreatePage";
+import LeadDetailPage from "./pages/leads/LeadDetailPage";
+import LeadEditPage from "./pages/leads/LeadEditPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -26,7 +30,10 @@ export default function App() {
           <Route path="/customers/new" element={<CustomerCreatePage />} />
           <Route path="/customers/:customerId" element={<CustomerDetailPage />} />
           <Route path="/customers/:customerId/edit" element={<CustomerEditPage />} />
-          <Route path="/leads" element={<ModulePlaceholderPage title="Leads" />} />
+          <Route path="/leads" element={<LeadListPage />} />
+          <Route path="/leads/new" element={<LeadCreatePage />} />
+          <Route path="/leads/:leadId" element={<LeadDetailPage />} />
+          <Route path="/leads/:leadId/edit" element={<LeadEditPage />} />
           <Route path="/follow-ups" element={<ModulePlaceholderPage title="Follow-Ups" />} />
           <Route path="/opportunities" element={<ModulePlaceholderPage title="Opportunities" />} />
           <Route path="/activities" element={<ModulePlaceholderPage title="Activities" />} />

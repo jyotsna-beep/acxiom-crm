@@ -135,6 +135,14 @@ def get_customer(db: Session, *, current_user: User, customer_id: UUID) -> Custo
 
 
 def create_customer(db: Session, *, current_user: User, payload: CustomerCreate, ip_address: str | None) -> CustomerResponse:
+    customer = create_customer_for_conversion(db, current_user=current_user, payload=payload, ip_address=ip_address)
+    db.commit()
+    db.refresh(customer, attribute_names=["owner"])
+    return _response(customer)
+
+
+def create_customer_for_conversion(db: Session, *, current_user: User, payload: CustomerCreate, ip_address: str | None) -> Customer:
+    """Create a customer within the caller's transaction (used by lead conversion)."""
     owner = _owner_or_error(db, current_user=current_user, requested_owner_id=payload.owner_id)
     _duplicate_or_error(db, email=str(payload.email), phone=payload.phone)
     customer = Customer(
@@ -155,9 +163,7 @@ def create_customer(db: Session, *, current_user: User, payload: CustomerCreate,
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="A customer with that email or phone already exists.") from exc
     db.refresh(customer, attribute_names=["owner"])
     write_audit(db, actor_id=current_user.id, action="customer_created", entity_name="customer", record_id=customer.id, new_value=_customer_snapshot(customer), ip_address=ip_address)
-    db.commit()
-    db.refresh(customer, attribute_names=["owner"])
-    return _response(customer)
+    return customer
 
 
 def update_customer(db: Session, *, current_user: User, customer_id: UUID, payload: CustomerUpdate, ip_address: str | None) -> CustomerResponse:
