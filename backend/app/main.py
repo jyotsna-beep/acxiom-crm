@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.api.router import api_router
 from app.core.config import get_settings
 from app.core.database import get_db
 
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "X-CSRF-Token"],
 )
+app.include_router(api_router)
 
 
 @app.get("/health", tags=["system"])

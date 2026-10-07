@@ -20,6 +20,7 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     failed_login_count: Mapped[int] = mapped_column(default=0, nullable=False)
     lockout_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    token_version: Mapped[int] = mapped_column(default=0, nullable=False)
 
     role: Mapped["Role"] = relationship(back_populates="users")
     manager: Mapped["User | None"] = relationship(remote_side="User.id", back_populates="reports")
