@@ -6,6 +6,10 @@ import LoginPage from "./pages/LoginPage";
 import AppLayout from "./layouts/AppLayout";
 import DashboardPlaceholderPage from "./pages/DashboardPlaceholderPage";
 import ModulePlaceholderPage from "./pages/ModulePlaceholderPage";
+import CustomerCreatePage from "./pages/customers/CustomerCreatePage";
+import CustomerDetailPage from "./pages/customers/CustomerDetailPage";
+import CustomerEditPage from "./pages/customers/CustomerEditPage";
+import CustomerListPage from "./pages/customers/CustomerListPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -18,7 +22,10 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<DashboardPlaceholderPage />} />
-          <Route path="/customers" element={<ModulePlaceholderPage title="Customers" />} />
+          <Route path="/customers" element={<CustomerListPage />} />
+          <Route path="/customers/new" element={<CustomerCreatePage />} />
+          <Route path="/customers/:customerId" element={<CustomerDetailPage />} />
+          <Route path="/customers/:customerId/edit" element={<CustomerEditPage />} />
           <Route path="/leads" element={<ModulePlaceholderPage title="Leads" />} />
           <Route path="/follow-ups" element={<ModulePlaceholderPage title="Follow-Ups" />} />
           <Route path="/opportunities" element={<ModulePlaceholderPage title="Opportunities" />} />
