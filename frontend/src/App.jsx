@@ -20,11 +20,24 @@ import LeadDetailPage from "./pages/leads/LeadDetailPage";
 import LeadEditPage from "./pages/leads/LeadEditPage";
 import OpportunityListPage from "./pages/opportunities/OpportunityListPage";
 import OpportunityDetailPage from "./pages/opportunities/OpportunityDetailPage";
-import { OpportunityCreatePage, OpportunityEditPage } from "./pages/opportunities/OpportunityFormPages";
+import {
+  OpportunityCreatePage,
+  OpportunityEditPage,
+} from "./pages/opportunities/OpportunityFormPages";
 import EngagementListPage from "./pages/engagements/EngagementListPage";
 import EngagementDetailPage from "./pages/engagements/EngagementDetailPage";
-import { FollowUpCreatePage, FollowUpEditPage, ActivityCreatePage, ActivityEditPage } from "./pages/engagements/EngagementFormPages";
-import { UserListPage, UserCreatePage, UserDetailPage, UserEditPage } from "./pages/users/UserPages";
+import {
+  FollowUpCreatePage,
+  FollowUpEditPage,
+  ActivityCreatePage,
+  ActivityEditPage,
+} from "./pages/engagements/EngagementFormPages";
+import {
+  UserListPage,
+  UserCreatePage,
+  UserDetailPage,
+  UserEditPage,
+} from "./pages/users/UserPages";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -39,23 +52,50 @@ export default function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/customers" element={<CustomerListPage />} />
           <Route path="/customers/new" element={<CustomerCreatePage />} />
-          <Route path="/customers/:customerId" element={<CustomerDetailPage />} />
-          <Route path="/customers/:customerId/edit" element={<CustomerEditPage />} />
+          <Route
+            path="/customers/:customerId"
+            element={<CustomerDetailPage />}
+          />
+          <Route
+            path="/customers/:customerId/edit"
+            element={<CustomerEditPage />}
+          />
           <Route path="/leads" element={<LeadListPage />} />
           <Route path="/leads/new" element={<LeadCreatePage />} />
           <Route path="/leads/:leadId" element={<LeadDetailPage />} />
           <Route path="/leads/:leadId/edit" element={<LeadEditPage />} />
-          <Route path="/follow-ups" element={<EngagementListPage kind="follow-ups" />} />
+          <Route
+            path="/follow-ups"
+            element={<EngagementListPage kind="follow-ups" />}
+          />
           <Route path="/follow-ups/new" element={<FollowUpCreatePage />} />
-          <Route path="/follow-ups/:id" element={<EngagementDetailPage kind="follow-up" />} />
+          <Route
+            path="/follow-ups/:id"
+            element={<EngagementDetailPage kind="follow-up" />}
+          />
           <Route path="/follow-ups/:id/edit" element={<FollowUpEditPage />} />
           <Route path="/opportunities" element={<OpportunityListPage />} />
-          <Route path="/opportunities/new" element={<OpportunityCreatePage />} />
-          <Route path="/opportunities/:opportunityId" element={<OpportunityDetailPage />} />
-          <Route path="/opportunities/:opportunityId/edit" element={<OpportunityEditPage />} />
-          <Route path="/activities" element={<EngagementListPage kind="activities" />} />
+          <Route
+            path="/opportunities/new"
+            element={<OpportunityCreatePage />}
+          />
+          <Route
+            path="/opportunities/:opportunityId"
+            element={<OpportunityDetailPage />}
+          />
+          <Route
+            path="/opportunities/:opportunityId/edit"
+            element={<OpportunityEditPage />}
+          />
+          <Route
+            path="/activities"
+            element={<EngagementListPage kind="activities" />}
+          />
           <Route path="/activities/new" element={<ActivityCreatePage />} />
-          <Route path="/activities/:id" element={<EngagementDetailPage kind="activity" />} />
+          <Route
+            path="/activities/:id"
+            element={<EngagementDetailPage kind="activity" />}
+          />
           <Route path="/activities/:id/edit" element={<ActivityEditPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route element={<ProtectedRoute allowedRoles={["Admin"]} />}>

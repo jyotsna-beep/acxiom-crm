@@ -11,9 +11,37 @@ export default function CustomerCreatePage() {
   const navigate = useNavigate();
   const [owners, setOwners] = useState(null);
 
-  useEffect(() => { getCustomerOwners().then(setOwners).catch(() => setOwners([])); }, []);
+  useEffect(() => {
+    getCustomerOwners()
+      .then(setOwners)
+      .catch(() => setOwners([]));
+  }, []);
   if (owners === null) return <LoadingState />;
-  if (!owners.length) return <><PageHeader title="Create customer" /><EmptyState title="No available owner" message="An active permitted owner is required before a customer can be created." /></>;
+  if (!owners.length)
+    return (
+      <>
+        <PageHeader title="Create customer" />
+        <EmptyState
+          title="No available owner"
+          message="An active permitted owner is required before a customer can be created."
+        />
+      </>
+    );
 
-  return <><PageHeader title="Create customer" description="Customer ownership is enforced by the server." /><CustomerForm owners={owners} submitLabel="Create customer" onSubmit={async (payload) => { const customer = await createCustomer(payload); navigate(`/customers/${customer.id}`); }} /></>;
+  return (
+    <>
+      <PageHeader
+        title="Create customer"
+        description="Customer ownership is enforced by the server."
+      />
+      <CustomerForm
+        owners={owners}
+        submitLabel="Create customer"
+        onSubmit={async (payload) => {
+          const customer = await createCustomer(payload);
+          navigate(`/customers/${customer.id}`);
+        }}
+      />
+    </>
+  );
 }

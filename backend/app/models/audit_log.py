@@ -1,3 +1,4 @@
+from app.models.user import User
 import uuid
 from datetime import datetime
 from typing import Any

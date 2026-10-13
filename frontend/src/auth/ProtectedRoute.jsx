@@ -9,7 +9,11 @@ export default function ProtectedRoute({ allowedRoles }) {
   const location = useLocation();
 
   if (isLoading) {
-    return <main className="container py-5"><LoadingState /></main>;
+    return (
+      <main className="container py-5">
+        <LoadingState />
+      </main>
+    );
   }
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
